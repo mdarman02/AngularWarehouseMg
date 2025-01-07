@@ -1,0 +1,17 @@
+/* filepath: /d:/project/AngularP/warehousemanagement/src/app/components/dashboard/dashboard.component.css */
+.container {
+  margin-top: 20px;
+}
+
+.card {
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+.card-text {
+  font-size: 2rem;
+  font-weight: bold;
+}

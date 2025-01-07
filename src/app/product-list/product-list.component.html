@@ -1,0 +1,98 @@
+<!-- <div class="container">
+  <h2 class="text-center my-4">Product List</h2>
+  <button class="btn btn-primary mb-3" routerLink="/add-product">Add New Product</button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>SKU</th>
+        <th>Category</th>
+        <th>Current Stock</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td>{{ product.sku }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.currentStock }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning" [routerLink]="['/edit-product', product.id]">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteProduct(product.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="onPageChange(currentPage - 1)">Previous</a>
+      </li>
+      <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="i + 1 === currentPage">
+        <a class="page-link" (click)="onPageChange(i + 1)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="onPageChange(currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div> -->
+
+
+<div class="container">
+    <h2 class="text-center my-4">Product List</h2>
+    <button class="btn btn-primary mb-3" routerLink="/add-product">Add New Product</button>
+  
+    <!-- Loading indicator -->
+    <div *ngIf="loading">Loading products...</div>
+  
+    <!-- Error message -->
+    <div *ngIf="error" class="error">{{ error }}</div>
+  
+    <!-- Product List Table -->
+    <table class="table table-striped" *ngIf="!loading && !error">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>SKU</th>
+          <th>Category</th>
+          <th>Current Stock</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.name }}</td>
+          <td>{{ product.sku }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.currentStock }}</td>
+          <td>{{ product.price | currency }}</td>
+          <td>
+            <!-- Action buttons can be added here if needed -->
+            <button class="btn btn-sm btn-warning" [routerLink]="['/edit-product', product.id]">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteProduct(product.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Pagination -->
+    <nav aria-label="Page navigation" *ngIf="totalPages > 1">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="onPageChange(currentPage - 1)">Previous</a>
+        </li>
+        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="i + 1 === currentPage">
+          <a class="page-link" (click)="onPageChange(i + 1)">{{ i + 1 }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="onPageChange(currentPage + 1)">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  
