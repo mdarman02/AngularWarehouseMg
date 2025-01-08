@@ -1,0 +1,33 @@
+<div class="container">
+  <h2 class="text-center my-4">Orders</h2>
+  <button class="btn btn-primary mb-3" (click)="createNewOrder()">Create New Order</button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Date</th>
+        <th>Total Items</th>
+        <th>Total Amount</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.id }}</td>
+        <td>{{ order.createdAt | date }}</td>
+        <td>{{ order.totalItems }}</td>
+        <td>{{ order.totalAmount | currency }}</td>
+        <td>{{ order.status }}</td>
+        <!-- <div class="container"> -->
+        
+          <!-- <app-create-order [orderItems]="selectedOrderItems" (orderCreated)="onOrderCreated()"></app-create-order> -->
+        <!-- </div> -->
+        <td>
+          <button class="btn btn-sm btn-info" (click)="viewOrderDetails(order.id)">View Details</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <app-create-order [orderItems]="selectedOrderItems" (orderCreated)="onOrderCreated()"></app-create-order> -->
+</div>

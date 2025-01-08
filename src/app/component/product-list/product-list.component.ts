@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 // import { ToastrService } from 'ngx-toastr'; 
 // import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -177,17 +177,6 @@ export class ProductListComponent implements OnInit {
         }
       }).subscribe({
         next: (data) => {
-          // Check if the data contains products and totalPages (structure may vary)
-          // if (data && Array.isArray(data.products)) {
-          //   this.products = data.products;
-          //   this.totalElements = data.totalElements;
-          //   // this.totalPages = data.totalPages;  // Assuming the response contains a 'totalPages' field
-          //   this.totalPages = Math.ceil(data.totalElements / 10); // Assuming the response contains a 'totalElements' field
-          //   this.loading = false;
-          // } else {
-          //   this.error = 'Invalid response format';
-          //   this.loading = false;
-          // }
           if (data && data.content && Array.isArray(data.content)) {
             this.products = data.content; // Get the products from the 'content' field
             this.totalElements = data.totalElements; // Total elements

@@ -1,0 +1,79 @@
+<!-- filepath: /d:/project/AngularP/warehousemanagement/src/app/components/dashboard/dashboard.component.html -->
+<div class="container">
+  <h2 class="text-center my-4">Dashboard</h2>
+  <div class="row">
+    <div class="col-md-3">
+      <a routerLink="/orders" class="text-decoration-none">
+        <div class="card text-white bg-secondary mb-3">
+          <div class="card-body">
+            <h5 class="card-title">orders</h5>
+            <p class="card-text">{{ totalProducts }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <a routerLink="/products" class="text-decoration-none">
+        <div class="card text-white bg-secondary mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Total Products</h5>
+            <p class="card-text">{{ totalProducts }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <a routerLink="/stock-management" class="text-decoration-none">
+      <div class="card text-white bg-secondary mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Total Stock Value</h5>
+          <p class="card-text">{{ totalStockValue | currency }}</p>
+        </div>
+      </div>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-secondary mb-3" (click)="toggleLowStockTable()">
+        <div class="card-body">
+          <h5 class="card-title">Low Stock Products</h5>
+          <p class="card-text">{{ lowStockProducts.length }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-secondary mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Recent Orders</h5>
+          <P class="card-text">5</P>
+          <ul class="list-group">
+            <!-- <li *ngFor="let product of recentOrders" class="list-group-item">
+              {{ product.name }}
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="row" *ngIf="showLowStockTable">
+  <div class="col-md-12">
+    <h3>Low Stock Products</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Current Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of lowStockProducts">
+          <td>{{ product.name }}</td>
+          <td>{{ product.currentStock }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
