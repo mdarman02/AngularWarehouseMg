@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Order } from 'src/app/model/order.model';
 import { Product } from 'src/app/model/product.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -10,21 +13,31 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class DashboardComponent implements OnInit {
   totalProducts: number = 0; // Example value, replace with actual data
+  totalOrders: number = 0; // Example value, replace with actual data
   totalStockValue: number = 0; // Example value, replace with actual data
   lowStockProducts: Product[] = []; // Example value, replace with actual data
-  recentOrders: number = 10; // Example value, replace with actual data
+  recentOrders: Order[] = [];; // Example value, replace with actual data
   showLowStockTable: boolean = false;
+  showRecentOrdersTable: boolean = false;
 
 
   constructor( private productService: ProductService,
-    private authService: AuthService) {
+    private authService: AuthService,private orderService: OrderService
+    ,private router: Router  
+  ) {
    
    }
 
   ngOnInit(): void {
-    this.fetchTotalProducts();
+    if(!this.authService.isLoggedIn()){
+      this.router.navigate(['/login']);
+    }else{
+        this.fetchTotalProducts();
     this.fetchTotalStockValue();
     this.fetchLowStockProducts();
+    this.fetchTotalOrders();
+    }
+    
     // Fetch data from the backend and update the properties
   }
 
@@ -37,6 +50,20 @@ export class DashboardComponent implements OnInit {
         },
         error: (err: any) => {
           console.error('Failed to fetch total products', err);
+        }
+      });
+    }
+  }
+  
+  fetchTotalOrders(): void {
+    const token = this.authService.getToken();
+    if (token) {
+      this.orderService.getTotalOrders(token).subscribe({
+        next: (total: number) => {
+          this.totalOrders = total;
+        },
+        error: (err: any) => {
+          console.error('Failed to fetch total orders', err);
         }
       });
     }
@@ -68,6 +95,31 @@ export class DashboardComponent implements OnInit {
       });
     }
   }
+
+
+  toggleRecentOrdersTable(): void {
+    this.showRecentOrdersTable = !this.showRecentOrdersTable;
+    if (this.showRecentOrdersTable) {
+      this.fetchRecentOrders();
+    }
+  }
+
+  fetchRecentOrders(): void {
+    const token = this.authService.getToken();
+    if (token) {
+      this.orderService.getRecentOrders(token, 5).subscribe({
+        next: (orders: Order[]) => {
+          this.recentOrders = orders;
+        },
+        error: (err: any) => {
+          console.error('Failed to fetch recent orders', err);
+        }
+      });
+    }
+  }
+
+
+
   toggleLowStockTable(): void {
     this.showLowStockTable = !this.showLowStockTable;
   }

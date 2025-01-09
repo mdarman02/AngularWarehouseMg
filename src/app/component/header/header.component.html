@@ -1,12 +1,33 @@
-<!-- filepath: /d:/project/AngularP/warehousemanagement/src/app/components/header/header.component.html -->
+<!-- filepath: /d:/project/AngularP/warehousemanagement/src/app/components/header/header.component.html
 <header class="header">
   <div class="container">
     <h1>Warehouse Management System</h1>
     <nav>
       <ul>
-        <li><a routerLink="/home">Home</a></li>
-        <li><a routerLink="/login">Login</a></li>
-        <li><a routerLink="/register">Register</a></li>
+        <li><a routerLink="/dashboard">Home</a></li>
+        <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>
+        <li *ngIf="!isLoggedIn"><a routerLink="/register">Register</a></li>
+        <li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header> -->
+
+
+<header class="header">
+  <div class="container">
+    <h1>Warehouse Management System</h1>
+    <nav>
+      <ul>
+        <!-- Always show the Home link -->
+        <li *ngIf="isLoggedIn"><a routerLink="/dashboard">Home</a></li>
+
+        <!-- Show Login and Register links only if not logged in -->
+        <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>
+        <li *ngIf="!isLoggedIn"><a routerLink="/register">Register</a></li>
+
+        <!-- Show Logout link only if logged in -->
+        <li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
       </ul>
     </nav>
   </div>

@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Order } from 'src/app/model/order.model';
 import { OrderItem } from 'src/app/model/orderItem.model';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -18,11 +19,16 @@ export class OrdersComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    if(!this.authService.isLoggedIn()){
+      this.router.navigate(['/login']);
+    }else{
     this.loadOrders();
+    }
   }
 
   loadOrders(): void {
@@ -35,6 +41,10 @@ export class OrdersComponent implements OnInit {
             order.totalItems = order.items.reduce((sum, item) => sum + item.quantity, 0);
           });
         },
+
+
+        
+
         error: (err: any) => {
           this.toastr.error('Failed to load orders');
         }
@@ -43,10 +53,11 @@ export class OrdersComponent implements OnInit {
   }
 
   viewOrderDetails(orderId: number): void {
-    const order = this.orders.find(o => o.id === orderId);
-    if (order) {
-      this.selectedOrderItems = order.items;
-    }
+    // const order = this.orders.find(o => o.id === orderId);
+    // if (order) {
+    //   this.selectedOrderItems = order.items;
+    // }
+    this.router.navigate(['/orders', orderId]);
   }
 
   createNewOrder(): void {

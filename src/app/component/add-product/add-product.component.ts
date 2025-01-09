@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/model/product.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -23,10 +24,15 @@ export class AddProductComponent {
   constructor(
     private productService: ProductService,
     private toastr: ToastrService,
-    public router: Router
+    public router: Router,
+    private authService: AuthService
   ) { }
 
   addProduct(): void {
+       
+    if(!this.authService.isLoggedIn()){
+      this.router.navigate(['/login']);
+    }else{
     this.productService.createProduct(this.product).subscribe({
       next: () => {
         this.toastr.success('Product added successfully');
@@ -37,4 +43,5 @@ export class AddProductComponent {
       }
     });
   }
+}
 }

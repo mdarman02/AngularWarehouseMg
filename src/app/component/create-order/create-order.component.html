@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <h2 class="text-center my-4">Create New Order</h2>
     <form (ngSubmit)="createOrder()">
       <div class="form-group">
@@ -21,6 +21,52 @@
         <input type="text" id="totalAmount" class="form-control" [value]="totalAmount | currency" readonly>
       </div>
       <button type="submit" class="btn btn-success">Create Order</button>
+    </form>
+    <h3 class="mt-4">Order Items</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of orderItems">
+          <td>{{ getProductById(item.productId)?.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.unitPrice | currency }}</td>
+          <td>{{ item.unitPrice * item.quantity | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
+
+
+
+  <div class="container">
+    <h2 class="text-center my-4">Create New Order</h2>
+    <form (ngSubmit)="addOrderItemAndCreateOrder(+product.value, +quantity.value)">
+      <div class="form-group">
+        <label for="product">Product</label>
+        <select id="product" class="form-control" #product>
+          <option *ngFor="let product of products" [value]="product.id">{{ product.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" class="form-control" #quantity (keyup.enter)="addOrderItemAndCreateOrder(+product.value, +quantity.value)">
+      </div>
+      <div class="form-group mt-3">
+        <label for="notes">Order Notes</label>
+        <textarea id="notes" class="form-control" [(ngModel)]="notes" name="notes"></textarea>
+      </div>
+      <div class="form-group mt-3">
+        <label for="totalAmount">Total Amount</label>
+        <input type="text" id="totalAmount" class="form-control" [value]="totalAmount | currency" readonly>
+      </div>
+      <button type="submit" class="btn btn-success">Add Product and Create Order</button>
     </form>
     <h3 class="mt-4">Order Items</h3>
     <table class="table table-striped">

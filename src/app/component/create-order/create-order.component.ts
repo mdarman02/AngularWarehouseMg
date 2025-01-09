@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/model/product.model';
 import { OrderItemDto } from 'src/app/model/orderItem.model';
 import { OrderDto } from 'src/app/model/order.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,11 +23,17 @@ export class CreateOrderComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private orderService: OrderService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    if(!this.authService.isLoggedIn()){
+      this.router.navigate(['/login']);
+    }else{
     this.loadProducts();
+    }
   }
 
   loadProducts(): void {
@@ -102,6 +110,24 @@ export class CreateOrderComponent implements OnInit {
           });
         }
       });
+    }
+  }
+
+  addOrderItemAndCreateOrder(productId: number, quantity: number): void {
+    const product = this.products.find(p => p.id === productId);
+    if (product) {
+      if (product.currentStock < quantity) {
+        this.toastr.error('Insufficient stock for product: ' + product.name);
+        return;
+      }
+      const orderItem: OrderItemDto = {
+        productId: product.id,
+        quantity: quantity,
+        unitPrice: product.price
+      };
+      this.orderItems.push(orderItem);
+      this.calculateTotalAmount();
+      this.createOrder();
     }
   }
   getProductById(productId: number): Product | undefined {

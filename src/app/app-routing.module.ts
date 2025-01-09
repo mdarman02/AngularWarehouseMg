@@ -10,6 +10,7 @@ import { AddProductComponent } from './component/add-product/add-product.compone
 import { StockManagementComponent } from './component/stock-management/stock-management.component';
 import { OrdersComponent } from './component/orders/orders.component';
 import { CreateOrderComponent } from './component/create-order/create-order.component';
+import { OrderDetailsComponent } from './component/order-details/order-details.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'dashboard',component:DashboardComponent},
   {path: 'products',component:ProductListComponent},
   { path: 'edit-product/:id', component: ProductEditComponent },
+  { path: 'orders/:id', component: OrderDetailsComponent },
   {path: 'add-product',component:AddProductComponent},
   {path: 'stock-management',component:StockManagementComponent},
   {path: 'orders',component:OrdersComponent},

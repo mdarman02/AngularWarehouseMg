@@ -25,4 +25,12 @@ import { Order, OrderDto } from "../model/order.model";
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         return this.http.get<Order>(`${this.apiUrl}/${id}`, { headers });
       }
+      getTotalOrders(token: string): Observable<number> {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.get<number>(`${this.apiUrl}/count`, { headers });
+      }
+      getRecentOrders(token: string, limit: number): Observable<Order[]> {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.get<Order[]>(`${this.apiUrl}/recent?limit=${limit}`, { headers });
+      }
   }
